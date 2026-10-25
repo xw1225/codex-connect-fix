@@ -1,0 +1,31 @@
+name: 问题报告 / Bug report
+description: 报告连接修复的问题，不要上传账号或个人配置。
+body:
+  - type: markdown
+    attributes:
+      value: 请勿提交 config.toml、auth.json、代理订阅、配对二维码或原始 doctor 输出。
+  - type: input
+    id: versions
+    attributes:
+      label: 工具、Windows 与 Codex 版本
+    validations:
+      required: true
+  - type: dropdown
+    id: action
+    attributes:
+      label: 操作
+      options:
+        - 部署转发器
+        - 卸载转发器
+        - 修复重连
+        - 还原重连
+        - 检测与诊断
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤、预期行为与精简错误文字
+      description: 请遮盖用户名、路径及其他个人信息。
+    validations:
+      required: true

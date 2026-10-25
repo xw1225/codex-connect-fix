@@ -1,0 +1,64 @@
+name: Windows build and release
+
+on:
+  push:
+    branches: ['**']
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Build, test, and package
+        shell: pwsh
+        env:
+          RELEASE_REF_TYPE: ${{ github.ref_type }}
+          RELEASE_REF_NAME: ${{ github.ref_name }}
+        run: |
+          if ($env:RELEASE_REF_TYPE -eq 'tag') {
+            if ($env:RELEASE_REF_NAME -notmatch '^v[0-9]+\.[0-9]+\.[0-9]+$') { throw 'Expected a vMAJOR.MINOR.PATCH tag.' }
+            ./package.ps1 -Version ($env:RELEASE_REF_NAME.Substring(1))
+          } else {
+            ./package.ps1
+          }
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: windows-packages
+          path: |
+            dist/*.zip
+            dist/SHA256SUMS.txt
+            dist/release-notes.md
+          if-no-files-found: error
+          retention-days: 14
+
+  draft-release:
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: windows-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: windows-packages
+          path: dist
+      - name: Create draft release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          $assets = @(Get-ChildItem -LiteralPath dist -Filter '*.zip' -File | ForEach-Object FullName)
+          $assets += (Resolve-Path -LiteralPath dist/SHA256SUMS.txt).Path
+          gh release create $env:RELEASE_TAG --repo $env:GITHUB_REPOSITORY --verify-tag --draft --title "Codex Connect Fix $env:RELEASE_TAG" --notes-file dist/release-notes.md @assets
+          if ($LASTEXITCODE -ne 0) { throw 'Draft release creation failed.' }

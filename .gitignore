@@ -1,0 +1,11 @@
+/build/
+/dist/
+*.exe
+*.dll
+*.pdb
+*.user
+*.suo
+*.log
+*.bak
+.vs/
+.DS_Store
