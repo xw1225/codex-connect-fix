@@ -5,7 +5,7 @@
 - **Cannot add a remote control device:** when a local proxy setup prevents Codex from starting pairing or adding a phone or another computer, deploy a background relay with one click to help restore remote device setup and connectivity.
 - **Codex reconnects five times on each use:** when Codex is not using the system proxy correctly, apply the proxy-setting repair with one click and check the current HTTP and WebSocket connection status.
 
-Both fixes share a Chinese interface, with buttons to **uninstall the relay** and **restore the setting from before the reconnect repair**. Unzip a release and double-click `CodexConnectFix.exe`; end users do not need Python, Node.js, or PowerShell commands.
+Both fixes share a Chinese interface, with buttons to **uninstall the relay** and **restore the setting from before the reconnect repair**. [Download the v1.0.2 Windows ZIP](https://github.com/xw1225/codex-connect-fix/releases/download/v1.0.2/codex-connect-fix-v1.0.2-windows.zip), unzip it, and double-click `CodexConnectFix.exe`; end users do not need Python, Node.js, or PowerShell commands.
 
 This is an **unofficial community compatibility tool**, unaffiliated with OpenAI. Update the official desktop app first. Read the [official remote connection documentation](https://learn.chatgpt.com/docs/remote-connections) and [changelog](https://learn.chatgpt.com/docs/changelog) for current behavior.
 

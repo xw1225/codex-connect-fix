@@ -22,7 +22,7 @@
 
 ## 快速使用
 
-1. 从本仓库 Releases 下载 `codex-connect-fix-v1.0.2-windows.zip`，解压到普通文件夹。
+1. [下载 v1.0.2 Windows 使用包](https://github.com/xw1225/codex-connect-fix/releases/download/v1.0.2/codex-connect-fix-v1.0.2-windows.zip)，解压到普通文件夹。[版本说明、源码包与校验值](https://github.com/xw1225/codex-connect-fix/releases/tag/v1.0.2)。
 2. 打开代理软件并启用系统代理，双击 `CodexConnectFix.exe`。同一桌面用户即使具有管理员权限也能诊断；使用另一账户运行时会阻止对用户配置的操作。Codex CLI 始终以普通权限运行。
 3. 窗口会自动检测，在两个区域直接显示当前状态。需要手动指定端口时展开“代理设置”，填写代理软件的 **HTTP / 混合端口**，例如 `7890`、`15236` 或 `127.0.0.1:7890`。留空自动检测。
 4. 部署或卸载转发器时，阅读影响说明并接受 Windows 管理员确认。重连配置的修改无需管理员权限。
